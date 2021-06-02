@@ -32,12 +32,25 @@ module.exports = (db) => {
         return db.query(query)
             .then(result => result.rows)
             .catch(err => err);
+    }
+
+
+    const createPost = (title, content, user_id) => {
+        const query = {
+            text: `INSERT INTO posts(title, content, user_id)
+            VALUES ($1, $2, $3) RETURNING *`,
+            values: [title,content,user_id]
+        }
+        return db.query(query)
+            .then(result => result.rows)
+            .catch(err => err);
 
     }
 
     return {
         getUserByEmail,
         addUser,
-        getUserPosts
+        getUserPosts,
+        createPost
     };
 };
