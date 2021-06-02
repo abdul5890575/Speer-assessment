@@ -58,11 +58,24 @@ module.exports = (db) => {
 
     }
 
+    const updatePost = (post_id, title, content) => {
+        console.log('eeeeeeeeeee',post_id, title, content)
+        const query = {
+            text: `UPDATE posts SET title = $2, content = $3 WHERE id = $1 RETURNING *`,
+            values: [post_id,title, content]
+        }
+        return db.query(query)
+            .then(result => result.rows)
+            .catch(err => err);
+
+    }
+
     return {
         getUserByEmail,
         addUser,
         getUserPosts,
         createPost,
-        deletePost
+        deletePost,
+        updatePost
     };
 };
