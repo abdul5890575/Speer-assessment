@@ -14,8 +14,8 @@ module.exports = ({
 
         getUserByEmail(email)
             .then(user => {
-              console.log(user)
                 if(!user) {
+                  res.status(400)
                   res.json({
                     msg: 'Invalid email'
                    })
@@ -26,6 +26,7 @@ module.exports = ({
                     msg: 'Logged in'
                    })
                 } else {
+                  res.status(400)
                   res.json({
                     msg: 'Invalid password'
                    });
