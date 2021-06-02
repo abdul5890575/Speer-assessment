@@ -19,6 +19,7 @@ module.exports = ({
         } = req.body;
 
         if (req.body.email === '' || req.body.password === '' || req.body.username === '') {
+            res.status(400)
             res.json({
                 msg: 'Username, Email or Password empty'
             })
@@ -26,6 +27,7 @@ module.exports = ({
             getUserByEmail(email)
             .then(user => {
                 if (user) {
+                    res.status(400)
                     res.json({
                         msg: 'Sorry, a user account with this email already exists'
                     });
