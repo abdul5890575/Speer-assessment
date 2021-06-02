@@ -8,6 +8,7 @@ const cookieSession = require('cookie-session');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const usersRegister = require('./routes/register');
+const tweetRoutes = require('./routes/tweet');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(cookieSession({
 app.use('/', indexRouter);
 app.use('/login', usersRouter(dbHelpers));
 app.use('/register', usersRegister(dbHelpers));
+app.use('/tweet', tweetRoutes(dbHelpers));
 
 
 // catch 404 and forward to error handler

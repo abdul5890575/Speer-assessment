@@ -1,32 +1,26 @@
-// let chai = require("chai")
+let chai = require("chai")
 let server = require("../bin/www")
-// let chaiHttp = require("chai-http")
-// let should = chai.should;
-// let expect = chai.expect;
-// let post =chai.post;
-// chai.use(chaiHttp);
-
-var chai = require('chai');
-var chaiHttp = require('chai-http');
+// let server = require("../app")
+let chaiHttp = require("chai-http")
+let should = chai.should();
 chai.use(chaiHttp);
-var should = chai.should();
-var expect = chai.expect();
+
+
+
 
 describe('Post on register', function() {
+
     it('should create a new user', (done) => {
       const payload = {
             "first_name":"abdul",
             "last_name":"shaukat",
-            "email": "aa11@gmail.com",
+            "email": "abd@gmail.com",
             "password":"test"  
       } 
       chai.request(server)
         .post("/register")
         .send(payload)
         .end((err,res) =>{
-            expect(res.body).to.be.json;
-            expect(res).to.have.status(200);
-            console.log('eeeeeeeeeeeeeee',res.body)
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('email');
@@ -34,6 +28,30 @@ describe('Post on register', function() {
         })
         .done()
     });
+
+    it('should give an error saying email already exists', (done) => {
+      const payload = {
+            "first_name":"abdul",
+            "last_name":"shaukat",
+            "email": "abd@gmail.com",
+            "password":"test"  
+      } 
+      chai.request(server)
+        .post("/register")
+        .send(payload)
+        .end((err,res) =>{
+            res.body.should.be.a('object');
+        })
+        .done()
+    });
   
 
   });
+
+      //   request(server).post("/register")
+    //   .send(payload)
+    //   .then((res)=>{
+    //       const body = res.body;
+    //       expect(body).to.contain.property('email')
+    //       done()
+    //   })
