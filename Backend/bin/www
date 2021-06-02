@@ -9,6 +9,7 @@ var debug = require('debug')('backend:server');
 var http = require('http');
 
 const socketio = require('socket.io');
+const formatMessage = require('../helpers/dataHelpers/formatmessage')
 
 /**
  * Get port from environment and store in Express.
@@ -24,21 +25,24 @@ app.set('port', port);
 var server = http.createServer(app);
 const io = socketio(server);
 
+//extract username from db
+const username = 'Max'
+
 //Run socket io when client connects
 // add to front end script
 io.on('connection', socket => {
 
     // Welcome current user
     // Catch on frontend and render
-    socket.emit('message', 'Welcome to Chat');
+    socket.emit('message', formatMessage(username,'Welcome to Chat'));
 
     // Broadcast when a user connects
-    socket.broadcast.emit('message',' user has joined the chat')
+    socket.broadcast.emit('message',formatMessage(username,'user has joined the chat'))
 
   // Listen for chat messages  
   // Emit to frontend where it should be appended to the DOM
     socket.on('chatMessage', msg => {
-      io.emit('message',msg)
+      io.emit('message',formatMessage('User',msg))
     });
 
       
