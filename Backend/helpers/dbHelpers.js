@@ -44,6 +44,17 @@ module.exports = (db) => {
         return db.query(query)
             .then(result => result.rows)
             .catch(err => err);
+    }
+
+
+    const deletePost = (post_id) => {
+        const query = {
+            text: `DELETE FROM posts WHERE id = $1 RETURNING *`,
+            values: [post_id]
+        }
+        return db.query(query)
+            .then(result => result.rows)
+            .catch(err => err);
 
     }
 
@@ -51,6 +62,7 @@ module.exports = (db) => {
         getUserByEmail,
         addUser,
         getUserPosts,
-        createPost
+        createPost,
+        deletePost
     };
 };

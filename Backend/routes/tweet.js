@@ -4,7 +4,8 @@ const {} = require('../helpers/dataHelpers');
 
 module.exports = ({ 
     getUserPosts,
-    createPost
+    createPost,
+    deletePost
 }) => {
     /* GET users listing. */
 
@@ -26,7 +27,22 @@ module.exports = ({
         const { title , content } = req.body   
         createPost(title , content, user_id)
         .then(data => {
-            res.json({data});
+            res.json(data);
+        })
+        .catch(err => res.json({
+            error: err.message
+        }));
+    })
+
+
+    router.delete('/:id', (req, res) => {
+        // usually id is in the params when you go into nested routes
+        let post_id = req.params.id  
+        console.log('ssssss',post_id) 
+        //add userid and post id check <----
+        deletePost(post_id)
+        .then(data => {
+            res.json(data);
         })
         .catch(err => res.json({
             error: err.message
