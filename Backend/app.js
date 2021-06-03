@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cookieSession = require('cookie-session');
 
-const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const usersRegister = require('./routes/register');
 const tweetRoutes = require('./routes/tweet');
@@ -14,10 +13,6 @@ const app = express();
 
 const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,7 +30,6 @@ app.use(cookieSession({
 }));
 
 
-app.use('/', indexRouter);
 app.use('/login', usersRouter(dbHelpers));
 app.use('/register', usersRegister(dbHelpers));
 app.use('/tweet', tweetRoutes(dbHelpers));
