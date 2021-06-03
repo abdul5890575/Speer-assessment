@@ -45,7 +45,6 @@ io.on('connection', socket => {
       io.emit('message',formatMessage('User',msg))
     });
 
-      
   });
 
 

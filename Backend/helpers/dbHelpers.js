@@ -69,12 +69,24 @@ module.exports = (db) => {
 
     }
 
+
+    const getPostinfo = (post_id) => {
+        const query = {
+            text: `SELECT * FROM posts  WHERE id = $1 `,
+            values: [post_id]
+        }
+        return db.query(query)
+            .then(result => result.rows)
+            .catch(err => err);
+    }
+
     return {
         getUserByEmail,
         addUser,
         getUserPosts,
         createPost,
         deletePost,
-        updatePost
+        updatePost,
+        getPostinfo
     };
 };
